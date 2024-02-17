@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "138110556910",
+    "firebase_url": "https://portfo-c7477-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "portfo-c7477",
+    "storage_bucket": "portfo-c7477.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138110556910:android:d5b1fc81e35f1b07d0b1ff",
+        "android_client_info": {
+          "package_name": "com.example.portfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCr80_bPI2199szHYn0heHIqgOy9xbwUME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
