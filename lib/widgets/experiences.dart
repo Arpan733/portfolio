@@ -18,6 +18,25 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
   bool isMobile = false;
   double width = 0.0;
 
+  List<Widget> texts({required ExperienceModel experienceModel}) => [
+        Text(
+          experienceModel.title,
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          experienceModel.duration,
+          style: GoogleFonts.poppins(
+            color: const Color(0xFF8491A0),
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
     isMobile = MediaQuery.of(context).size.width > 700 ? false : true;
@@ -27,7 +46,6 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
       children: [
         Container(
           width: 680,
-          margin: const EdgeInsets.only(top: 100),
           alignment: Alignment.center,
           child: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
@@ -38,8 +56,8 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
             child: Text(
               'EXPERIENCE',
               style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 55,
+                color: const Color(0xFFC5C5C5),
+                fontSize: isMobile ? 45 : 55,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -129,50 +147,32 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
 
                 containers.add(
                   Container(
-                    width: 680,
+                    width: isMobile ? width : 680,
                     margin: const EdgeInsets.only(top: 60),
-                    alignment: Alignment.center,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: isMobile ? 10 : 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: isMobile ? 150 : 115,
-                          width: isMobile ? width : 830,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                        isMobile
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:
+                                    texts(experienceModel: experienceModel),
+                              )
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    experienceModel.title,
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    experienceModel.duration,
-                                    style: GoogleFonts.poppins(
-                                      color: const Color(0xFF8491A0),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
+                                children:
+                                    texts(experienceModel: experienceModel),
                               ),
-                              Text(
-                                experienceModel.description,
-                                textAlign: TextAlign.justify,
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xFFC5C5C5),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
+                        Text(
+                          experienceModel.description,
+                          textAlign: TextAlign.justify,
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFFC5C5C5),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],

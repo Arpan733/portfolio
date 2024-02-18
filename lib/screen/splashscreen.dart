@@ -14,6 +14,9 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+  bool isMobile = false;
+  double width = 0.0;
+
   Offset pointer = const Offset(0, 0);
   String _textToShow = '';
   double _opacity = 1;
@@ -47,7 +50,12 @@ class _SplashScreenState extends State<SplashScreen>
         },
       );
     } else {
-      navigate();
+      Future.delayed(
+        const Duration(seconds: 1),
+        () {
+          navigate();
+        },
+      );
     }
   }
 
@@ -63,36 +71,30 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
-      body: AnimatedOpacity(
-        curve: Curves.slowMiddle,
-        duration: const Duration(milliseconds: 500),
-        opacity: _opacity,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.none,
-          onHover: (eve) {
-            setState(() {
-              pointer = eve.position;
-            });
-          },
-          child: Stack(
-            children: [
-              AnimatedBackground(
-                vsync: this,
-                behaviour: RandomParticleBehaviour(
-                  options: const ParticleOptions(
-                    spawnMaxRadius: 50,
-                    spawnMinRadius: 5,
-                    spawnMinSpeed: 10,
-                    spawnMaxSpeed: 50,
-                    particleCount: 15,
-                    minOpacity: 0.3,
-                    maxOpacity: 0.4,
-                    baseColor: Color(0xFF8000FF),
-                  ),
-                ),
-                child: AnimatedBackground(
+    isMobile = MediaQuery.of(context).size.width > 700 ? false : true;
+    width = MediaQuery.of(context).size.width;
+
+    return RefreshIndicator(
+      onRefresh: () => Navigator.pushNamedAndRemoveUntil(
+          context, Routes.splashscreen, (route) => false),
+      color: const Color(0xFF4169E1),
+      backgroundColor: const Color(0xFF2A2A2A),
+      child: Scaffold(
+        backgroundColor: const Color(0xFF1E1E1E),
+        body: AnimatedOpacity(
+          curve: Curves.slowMiddle,
+          duration: const Duration(milliseconds: 500),
+          opacity: _opacity,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.none,
+            onHover: (eve) {
+              setState(() {
+                pointer = eve.position;
+              });
+            },
+            child: Stack(
+              children: [
+                AnimatedBackground(
                   vsync: this,
                   behaviour: RandomParticleBehaviour(
                     options: const ParticleOptions(
@@ -103,50 +105,70 @@ class _SplashScreenState extends State<SplashScreen>
                       particleCount: 15,
                       minOpacity: 0.3,
                       maxOpacity: 0.4,
-                      baseColor: Color(0xFFFF8660),
+                      baseColor: Color(0xFF8000FF),
                     ),
                   ),
-                  child: Center(
-                    child: ShaderMask(
-                      shaderCallback: (bounds) => const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color(0xFFFF8660), Color(0xFF8000FF)],
-                      ).createShader(bounds),
-                      child: Text(
-                        _textToShow,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w800,
+                  child: AnimatedBackground(
+                    vsync: this,
+                    behaviour: RandomParticleBehaviour(
+                      options: const ParticleOptions(
+                        spawnMaxRadius: 50,
+                        spawnMinRadius: 5,
+                        spawnMinSpeed: 10,
+                        spawnMaxSpeed: 50,
+                        particleCount: 15,
+                        minOpacity: 0.3,
+                        maxOpacity: 0.4,
+                        baseColor: Color(0xFFFF8660),
+                      ),
+                    ),
+                    child: Center(
+                      child: Container(
+                        height: isMobile ? 500 : 500,
+                        width: isMobile ? width - 10 : 1000,
+                        alignment: Alignment.center,
+                        child: ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Color(0xFFFF8660), Color(0xFF8000FF)],
+                          ).createShader(bounds),
+                          child: Text(
+                            _textToShow,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 50,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 100),
-                left: pointer.dx - 50,
-                top: pointer.dy - 50,
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        const Color(0xFFFF8660).withOpacity(0.3),
-                        const Color(0xFF8000FF).withOpacity(0.3),
-                      ],
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 100),
+                  left: pointer.dx - 50,
+                  top: pointer.dy - 50,
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          const Color(0xFFFF8660).withOpacity(0.3),
+                          const Color(0xFF8000FF).withOpacity(0.3),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

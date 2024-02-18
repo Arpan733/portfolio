@@ -25,7 +25,7 @@ class _BottomWidgetState extends State<BottomWidget> {
       builder: (context, user, _) => Container(
         height: isMobile ? 500 : 420,
         width: width,
-        padding: EdgeInsets.symmetric(horizontal: width * 0.17),
+        padding: EdgeInsets.symmetric(horizontal: width * 0.16),
         color: const Color(0xFF4169E1),
         child: Column(
           children: [
@@ -44,6 +44,7 @@ class _BottomWidgetState extends State<BottomWidget> {
               margin: const EdgeInsets.only(top: 35),
               child: Text(
                 'Seasoned Full Stack Software Engineer with over a year of hands-on experience in designing and implementing robust, scalable, and innovative app solutions. Adept at leveraging a comprehensive skill set encompassing front-end and back-end technologies',
+                textAlign: TextAlign.justify,
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 14,

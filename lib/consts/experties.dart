@@ -1,17 +1,17 @@
-List<Map<String, dynamic>> experience = [
+List<Map<String, dynamic>> expertise = [
   {
     'name': 'Flutter',
-    'image': '/images/flutter-modified.png',
-    'hoverImage': '/images/flutter.png',
+    'image': 'images/flutter-modified.png',
+    'hoverImage': 'images/flutter.png',
   },
   {
     'name': 'Firebase',
-    'image': '/images/firebase-modified.png',
-    'hoverImage': '/images/firebase.png',
+    'image': 'images/firebase-modified.png',
+    'hoverImage': 'images/firebase.png',
   },
   {
     'name': 'Unity',
-    'image': '/images/unity-modified.png',
-    'hoverImage': '/images/unity.png',
+    'image': 'images/unity-modified.png',
+    'hoverImage': 'images/unity.png',
   },
 ];

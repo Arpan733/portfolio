@@ -19,16 +19,18 @@ class _ProjectWidgetState extends State<ProjectWidget> {
   PageController pageController = PageController();
   int pageIndex = 0;
 
+  double width = 0;
   bool isMobile = false;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
     isMobile = MediaQuery.of(context).size.width > 700 ? false : true;
 
     return Column(
       children: [
         Container(
-          width: 680,
+          width: isMobile ? width : 680,
           alignment: Alignment.center,
           child: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
@@ -40,7 +42,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
               'Projects',
               style: GoogleFonts.poppins(
                 color: Colors.white,
-                fontSize: 55,
+                fontSize: isMobile ? 45 : 55,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -60,7 +62,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                 children: [
                   Container(
                     height: 300,
-                    width: 390,
+                    width: !isMobile ? 390 : width - 10,
                     decoration: BoxDecoration(
                       color: const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(20),
@@ -70,7 +72,6 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                       children: [
                         const CardLoading(
                           height: 235,
-                          width: 390,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(20),
                             topLeft: Radius.circular(20),
@@ -78,7 +79,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                         ),
                         Container(
                           height: 65,
-                          width: 390,
+                          width: !isMobile ? 390 : width - 10,
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,7 +126,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                     },
                     child: Container(
                       height: 300,
-                      width: 390,
+                      width: !isMobile ? 390 : width - 10,
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: const Color(0xFF2A2A2A),
@@ -136,7 +137,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                         children: [
                           Container(
                             height: 235,
-                            width: 390,
+                            width: !isMobile ? 390 : width - 10,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
@@ -213,7 +214,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
 
             return StatefulBuilder(
               builder: (context, set) => SizedBox(
-                width: 510,
+                width: !isMobile ? 510 : width - 10,
                 height: 350,
                 child: Column(
                   children: [
@@ -221,37 +222,40 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              if (pageIndex != 0) {
-                                if (pageController.hasClients) {
-                                  pageController.previousPage(
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.slowMiddle,
-                                  );
-                                  set(() {
-                                    pageIndex--;
-                                  });
-                                }
-                              }
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios_outlined,
-                              color: pageIndex == 0
-                                  ? Colors.white24
-                                  : Colors.white70,
-                              size: 40,
-                            ),
-                          ),
-                        ),
+                        isMobile
+                            ? Container()
+                            : MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (pageIndex != 0) {
+                                      if (pageController.hasClients) {
+                                        pageController.previousPage(
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          curve: Curves.slowMiddle,
+                                        );
+                                        set(() {
+                                          pageIndex--;
+                                        });
+                                      }
+                                    }
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back_ios_outlined,
+                                    color: pageIndex == 0
+                                        ? Colors.white24
+                                        : Colors.white70,
+                                    size: 40,
+                                  ),
+                                ),
+                              ),
                         SizedBox(
                           width: isMobile ? 0 : 10,
                         ),
                         Container(
                           height: 300,
-                          width: 410,
+                          width: !isMobile ? 410 : width - 10,
                           alignment: Alignment.center,
                           child: PageView(
                             controller: pageController,
@@ -261,31 +265,34 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                         SizedBox(
                           width: isMobile ? 0 : 10,
                         ),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              if (pageIndex != containers.length - 1) {
-                                if (pageController.hasClients) {
-                                  pageController.nextPage(
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.slowMiddle,
-                                  );
-                                  set(() {
-                                    pageIndex++;
-                                  });
-                                }
-                              }
-                            },
-                            child: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              color: pageIndex == containers.length - 1
-                                  ? Colors.white24
-                                  : Colors.white70,
-                              size: 40,
-                            ),
-                          ),
-                        ),
+                        isMobile
+                            ? Container()
+                            : MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (pageIndex != containers.length - 1) {
+                                      if (pageController.hasClients) {
+                                        pageController.nextPage(
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          curve: Curves.slowMiddle,
+                                        );
+                                        set(() {
+                                          pageIndex++;
+                                        });
+                                      }
+                                    }
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: pageIndex == containers.length - 1
+                                        ? Colors.white24
+                                        : Colors.white70,
+                                    size: 40,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                     const SizedBox(

@@ -12,8 +12,14 @@ class AboutWidget extends StatefulWidget {
 }
 
 class _AboutWidgetState extends State<AboutWidget> {
+  bool isMobile = false;
+  double width = 0.0;
+
   @override
   Widget build(BuildContext context) {
+    isMobile = MediaQuery.of(context).size.width > 700 ? false : true;
+    width = MediaQuery.of(context).size.width;
+
     return Consumer<UserProvider>(
       builder: (context, user, _) => Column(
         children: [
@@ -50,7 +56,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                     text: 'I do code and\n',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 55,
+                      fontSize: isMobile ? 40 : 55,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -59,7 +65,7 @@ class _AboutWidgetState extends State<AboutWidget> {
                       'build ',
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-                        fontSize: 55,
+                        fontSize: isMobile ? 40 : 55,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -73,9 +79,10 @@ class _AboutWidgetState extends State<AboutWidget> {
                       ).createShader(bounds),
                       child: Text(
                         'Apps & Games!',
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize: 55,
+                          fontSize: isMobile ? 40 : 55,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
